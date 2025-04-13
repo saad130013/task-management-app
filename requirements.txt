@@ -3,5 +3,3 @@ pandas
 plotly
 fpdf
 openpyxl
-smtplib
-email

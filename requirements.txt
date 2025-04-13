@@ -1,5 +1,7 @@
 streamlit
 pandas
-reportlab
-arabic_reshaper
-python-bidi
+plotly
+fpdf
+openpyxl
+smtplib
+email

@@ -5,7 +5,6 @@ from datetime import datetime
 
 st.set_page_config(page_title="نظام إدارة المهام", layout="wide")
 
-# بيانات المستخدمين
 if "users_db" not in st.session_state:
     st.session_state.users_db = pd.DataFrame([
         {"اسم المستخدم": "ahmed", "الاسم الكامل": "أحمد", "الدور": "موظف", "كلمة المرور": "1234"},
@@ -15,7 +14,6 @@ if "users_db" not in st.session_state:
 
 users_df = st.session_state.users_db
 
-# تسجيل الدخول
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "current_user" not in st.session_state:
@@ -24,7 +22,7 @@ if "current_user" not in st.session_state:
 def logout():
     st.session_state.logged_in = False
     st.session_state.current_user = None
-    st.experimental_rerun()
+    st.rerun()
 
 if not st.session_state.logged_in:
     st.title("تسجيل الدخول")
@@ -36,7 +34,7 @@ if not st.session_state.logged_in:
             st.session_state.logged_in = True
             st.session_state.current_user = user_row.iloc[0].to_dict()
             st.success("تم تسجيل الدخول بنجاح")
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("اسم المستخدم أو كلمة المرور غير صحيحة")
 else:
@@ -91,7 +89,7 @@ else:
                     new_row = {"اسم المستخدم": new_username, "الاسم الكامل": full_name, "كلمة المرور": new_password, "الدور": role}
                     st.session_state.users_db = pd.concat([users_df, pd.DataFrame([new_row])], ignore_index=True)
                     st.success("تمت إضافة المستخدم.")
-                    st.experimental_rerun()
+                    st.rerun()
 
         st.subheader("تعديل / حذف مستخدم")
         selected_user = st.selectbox("اختر المستخدم", users_df["اسم المستخدم"])
@@ -114,14 +112,9 @@ else:
                 st.session_state.users_db.at[idx, "الدور"] = updated_role
                 st.session_state.users_db.at[idx, "كلمة المرور"] = updated_password
                 st.success("تم تحديث المستخدم.")
-                st.experimental_rerun()
+                st.rerun()
 
             if delete_btn:
                 st.session_state.users_db = users_df[users_df["اسم المستخدم"] != selected_user]
                 st.warning("تم حذف المستخدم.")
-                st.experimental_rerun()
-
-    elif menu == "الإعدادات":
-        st.title("الإعدادات العامة")
-        st.info("صفحة إعدادات النظام")
-
+                st.rerun()
